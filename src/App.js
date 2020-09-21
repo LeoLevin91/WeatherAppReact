@@ -17,7 +17,16 @@ function App() {
 
 
     const [query, setQuery] = useState('');
-    const [weather, setWeather] = useState({});
+    const [weather, setWeather] = useState({
+        name: "Your city",
+        sys: {
+            country: "Your country"
+        },
+        main: {
+            temp: 0
+        }
+
+    });
 
     const statusResponse = (response) => {
         if(response.status >= 200 && response.status < 300 ){
@@ -31,6 +40,20 @@ function App() {
         return response.json();
     }
 
+    useEffect(() => {
+        /*
+        * Для того что бы функция отработала при старте страницы 1 раз
+        * нужно в конце функции указать [null]
+        * */
+            fetch(`${API.path}weather?q=Moscow,RU&units=metric&APPID=${API.key}`)
+                .then(statusResponse)
+                .then(json)
+                .then(result => {
+                    setWeather(result);
+                    console.log(result);
+                })
+    }, [null]);
+
 
     const search = (evenT) => {
         if(evenT.key === "Enter"){
@@ -42,12 +65,6 @@ function App() {
                     setQuery('');
                     console.log(result);
                 })
-                // .then(res => res.json())
-                // .then(result => {
-                //     setWeather(result);
-                //     setQuery('');
-                //     console.log(result);
-                // });
         }
     }
 
@@ -70,13 +87,15 @@ function App() {
         }
     }
 
+    // Фоновое изображение зависящее от температуры
+    let classname = (weather.main.temp >= 16) ? "App warm" : "App";
 
   return (
-    <div className="App">
+    <div className={classname}>
         <main>
             <div className={"main-container"}>
                 <div className={"search-box"}>
-                    <input type="text" className={"text-field search-bar"} placeholder={"Search..."}
+                    <input type="text" className={"text-field search-bar"} placeholder={"Moscow, RU"}
                            onChange={event => setQuery(event.target.value)}
                            onKeyPress={search}
                            value={query}
@@ -84,12 +103,12 @@ function App() {
                 </div>
             </div>
             <div className={"location-box"}>
-                <div className="location">Samara, RU</div>
+                <div className="location">{weather.name}, {weather.sys.country}</div>
                 <div className="date">{dateFunction(new Date())}</div>
             </div>
             <div className="weather-box">
                 <div className="temp">
-                    15&#8451;
+                    {Math.round(weather.main.temp)}&#8451;
                 </div>
                 <div className="weather">
                     Sunny
