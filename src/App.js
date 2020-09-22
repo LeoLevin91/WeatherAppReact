@@ -1,4 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import Grid from "@material-ui/core/Grid";
+import Icon from '@mdi/react'
+import { mdiWeatherSunsetUp } from '@mdi/js';
+import { mdiWeatherSunsetDown } from '@mdi/js';
+import { mdiWeatherCloudy } from '@mdi/js';
+import { mdiWeatherWindy } from '@mdi/js';
 import './App.css';
 
 
@@ -20,11 +26,28 @@ function App() {
     const [weather, setWeather] = useState({
         name: "Your city",
         sys: {
-            country: "Your country"
+            country: "Your country",
+            sunset: 0,
+            sunrise: 0
         },
         main: {
-            temp: 0
+            temp: 0,
+            feels_like: 0,
+            humidity: 0,
+            pressure: 0
+        },
+        clouds: {
+            all: ""
+        },
+        weather: {
+            0: {
+                main: ""
+            }
+        },
+        wind: {
+            speed: 0
         }
+
 
     });
 
@@ -110,10 +133,50 @@ function App() {
                 <div className="temp">
                     {Math.round(weather.main.temp)}&#8451;
                 </div>
-                <div className="weather">
-                    Sunny
-                </div>
+                {/*<div className="weather">*/}
+                {/*    Sunny*/}
+                {/*</div>*/}
             </div>
+            <Grid container className={"addition-weather-box"} spacing={1} >
+                <Grid sm={2} item className={"item sunset-sunrise"}>
+                    <div className="sunset">
+                        <Icon path={mdiWeatherSunsetUp}
+                        size={2}
+                        />
+                        <p>Sunset: 21:30</p>
+                    </div>
+                    <div className="sunrise">
+                        <Icon path={mdiWeatherSunsetDown}
+                              size={2}
+                        />
+                        <p>Sunrise: 08:00</p>
+                    </div>
+                </Grid>
+                <Grid sm={2} item  className={"item humidity"}>
+                    <p>Humidity</p>
+                    <p>{weather.main.humidity} %</p>
+                </Grid>
+                <Grid sm={2} item className={"item pressure"}>
+                    <p>Pressure</p>
+                    <p>{weather.main.pressure}</p>
+                </Grid>
+                <Grid sm={2} item  className={"item clouds"}>
+                    <Icon path={mdiWeatherCloudy}
+                          size={4}
+                    />
+                    <p>{weather.clouds.all} %</p>
+                </Grid>
+                <Grid sm={2} item className={"item weatherClo"}>
+                    <p>Weather is:</p>
+                    <p>{weather.weather["0"].main}</p>
+                </Grid>
+                <Grid sm={2} item className={"item wind"}>
+                    <Icon path={mdiWeatherWindy}
+                          size={4}
+                    />
+                    <p>{weather.wind.speed} m/s</p>
+                </Grid>
+            </Grid>
         </main>
     </div>
   );

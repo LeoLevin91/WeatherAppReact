@@ -90,3 +90,48 @@ main {
   font-weight: 700;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 }
+
+
+.item {
+  border: 1px solid black;
+  font-family: sans-serif;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  color: #FFF;
+  font-weight: 200;
+  text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
+  text-align: center;
+}
+
+.sunset {
+  border-bottom: 1px solid white;
+}
+
+.sunrise {
+  margin-top: 5px;
+}
+
+.humidity p {
+  font-size: 40px;
+  vertical-align: center;
+}
+
+.pressure p {
+  font-size: 40px;
+  vertical-align: center;
+}
+
+.clouds p{
+  vertical-align: center;
+  font-size: 30px;
+}
+
+.weatherClo p {
+  font-size: 40px;
+  vertical-align: center;
+}
+
+.wind p {
+  vertical-align: center;
+  font-size: 35px;
+}
