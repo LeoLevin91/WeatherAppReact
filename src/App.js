@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Grid from "@material-ui/core/Grid";
 import Icon from '@mdi/react'
-import { mdiWeatherSunsetUp } from '@mdi/js';
-import { mdiWeatherSunsetDown } from '@mdi/js';
 import { mdiWeatherCloudy } from '@mdi/js';
 import { mdiWeatherWindy } from '@mdi/js';
 import './App.css';
@@ -26,9 +24,7 @@ function App() {
     const [weather, setWeather] = useState({
         name: "Your city",
         sys: {
-            country: "Your country",
-            sunset: 0,
-            sunrise: 0
+            country: "Your country"
         },
         main: {
             temp: 0,
@@ -41,21 +37,27 @@ function App() {
         },
         weather: {
             0: {
-                main: ""
+                main: "",
+                description: ""
             }
         },
         wind: {
             speed: 0
         }
-
-
     });
+    const[classNamee, setClasseName] = useState("text-field search-bar");
 
     const statusResponse = (response) => {
         if(response.status >= 200 && response.status < 300 ){
             return Promise.resolve(response);
         } else {
+            // return
+            // return Promise.reject(
+            //     setClasseName("text-field search-bar error")
+            // );
+            setClasseName("text-field search-bar error");
             return Promise.reject(new Error(response.statusText))
+
         }
     }
 
@@ -118,7 +120,7 @@ function App() {
         <main>
             <div className={"main-container"}>
                 <div className={"search-box"}>
-                    <input type="text" className={"text-field search-bar"} placeholder={"Moscow, RU"}
+                    <input type="text" className={classNamee} placeholder={"Moscow, RU"}
                            onChange={event => setQuery(event.target.value)}
                            onKeyPress={search}
                            value={query}
@@ -138,19 +140,9 @@ function App() {
                 {/*</div>*/}
             </div>
             <Grid container className={"addition-weather-box"} spacing={1} >
-                <Grid sm={2} item className={"item sunset-sunrise"}>
-                    <div className="sunset">
-                        <Icon path={mdiWeatherSunsetUp}
-                        size={2}
-                        />
-                        <p>Sunset: 21:30</p>
-                    </div>
-                    <div className="sunrise">
-                        <Icon path={mdiWeatherSunsetDown}
-                              size={2}
-                        />
-                        <p>Sunrise: 08:00</p>
-                    </div>
+                <Grid sm={2} item className={"item feels-like"}>
+                    <p>Temp feels like:</p>
+                    <p>{weather.main.feels_like}</p>
                 </Grid>
                 <Grid sm={2} item  className={"item humidity"}>
                     <p>Humidity</p>
@@ -168,7 +160,8 @@ function App() {
                 </Grid>
                 <Grid sm={2} item className={"item weatherClo"}>
                     <p>Weather is:</p>
-                    <p>{weather.weather["0"].main}</p>
+                    <p>{weather.weather["0"].main},</p>
+                    <p>({weather.weather["0"].description})</p>
                 </Grid>
                 <Grid sm={2} item className={"item wind"}>
                     <Icon path={mdiWeatherWindy}

@@ -103,12 +103,12 @@ main {
   text-align: center;
 }
 
-.sunset {
-  border-bottom: 1px solid white;
+.feels-like p:first-child {
+  font-size: 25px;
 }
 
-.sunrise {
-  margin-top: 5px;
+.feels-like p:last-child {
+  font-size: 50px;
 }
 
 .humidity p {
@@ -127,11 +127,15 @@ main {
 }
 
 .weatherClo p {
-  font-size: 40px;
+  font-size: 25px;
   vertical-align: center;
 }
 
 .wind p {
   vertical-align: center;
   font-size: 35px;
+}
+
+.text-field.search-bar.error {
+  border: 1px solid red;
 }
